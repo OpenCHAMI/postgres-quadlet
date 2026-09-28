@@ -1,0 +1,23 @@
+# SPDX-FileCopyrightText: (C) Copyright 2026 OpenCHAMI a Series of LF Projects, LLC
+# SPDX-License-Identifier: MIT
+
+# This workflow uses actions that are not certified by GitHub. They are
+# provided by a third-party and are governed by separate terms of
+# service, privacy policy, and support documentation.
+
+name: scorecard
+on:
+  branch_protection_rule:
+  schedule:
+    - cron: '39 5 * * 1'
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  scorecard:
+    permissions:
+      contents: read
+      security-events: write
+      id-token: write
+    uses: OpenCHAMI/github-actions/.github/workflows/scorecard.yml@773141a500334fad0508b093b792113ccac43610 # v3.5

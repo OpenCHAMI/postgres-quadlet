@@ -1,0 +1,51 @@
+# Copyright © 2026 OpenCHAMI a Series of LF Projects, LLC
+# SPDX-License-Identifier: MIT
+
+name: Release
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - v*
+
+permissions:
+  contents: read
+
+jobs:
+  config:
+    runs-on: ubuntu-latest
+    outputs:
+      rpm-unsigned: ${{ steps.names.outputs.rpm-unsigned }}
+      rpm-signed:   ${{ steps.names.outputs.rpm-signed }}
+      keys-public:  ${{ steps.names.outputs.keys-public }}
+    steps:
+      - id: names
+        run: |
+          {
+            echo "rpm-unsigned=rpms-unsigned"
+            echo "rpm-signed=rpms-signed"
+            echo "keys-public=gpg-public-keys"
+          } >> "$GITHUB_OUTPUT"
+  rpmbuild:
+    needs: [config]
+    uses: OpenCHAMI/github-actions/.github/workflows/build-rpm-quadlet.yml@773141a500334fad0508b093b792113ccac43610 # v3.5
+    with:
+      artifact-name-unsigned-rpms: ${{ needs.config.outputs.rpm-unsigned }}
+
+  rpmsign:
+    needs: [config, rpmbuild]
+    uses: OpenCHAMI/github-actions/.github/workflows/gpg-sign-artifacts.yml@773141a500334fad0508b093b792113ccac43610 # v3.5
+    secrets: inherit
+    with:
+      artifact-name-unsigned-rpms: ${{ needs.config.outputs.rpm-unsigned }}
+      artifact-name-signed-rpms: ${{ needs.config.outputs.rpm-signed }}
+      artifact-name-public-keys: ${{ needs.config.outputs.keys-public }}
+
+  release:
+    needs: [config, rpmsign]
+    permissions:
+      contents: write
+    uses: OpenCHAMI/github-actions/.github/workflows/release-signed-artifacts.yml@773141a500334fad0508b093b792113ccac43610 # v3.5
+    with:
+      artifact-name-signed-rpms: ${{ needs.config.outputs.rpm-signed }}
+      artifact-name-public-keys: ${{ needs.config.outputs.keys-public }}

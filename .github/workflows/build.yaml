@@ -1,0 +1,66 @@
+# Copyright © 2026 OpenCHAMI a Series of LF Projects, LLC
+# SPDX-License-Identifier: MIT
+
+name: Build each PR for testing and validation
+on:
+    pull_request:
+        branches:
+            - main
+        types: [opened, synchronize, reopened, edited]
+    workflow_dispatch:
+      inputs:
+        pr_number:
+          description: 'PR Number to build (optional, for manual PR builds)'
+          required: false
+          type: string
+
+permissions:
+  contents: read
+jobs:
+  config:
+    runs-on: ubuntu-latest
+    outputs:
+      rpm-unsigned: ${{ steps.names.outputs.rpm-unsigned }}
+      rpm-signed:   ${{ steps.names.outputs.rpm-signed }}
+      keys-public:  ${{ steps.names.outputs.keys-public }}
+    steps:
+      - id: names
+        run: |
+          {
+            echo "rpm-unsigned=rpms-unsigned"
+            echo "rpm-signed=rpms-signed"
+            echo "keys-public=public-keys"
+          } >> "$GITHUB_OUTPUT"
+
+  rpmbuild:
+    needs: [config]
+    uses: OpenCHAMI/github-actions/.github/workflows/build-rpm-quadlet.yml@773141a500334fad0508b093b792113ccac43610 # v3.5
+    with:
+      artifact-name-unsigned-rpms: ${{ needs.config.outputs.rpm-unsigned }}
+
+  rpmsign:
+    needs: [config, rpmbuild]
+    uses: OpenCHAMI/github-actions/.github/workflows/gpg-sign-artifacts.yml@773141a500334fad0508b093b792113ccac43610 # v3.5
+    secrets: inherit
+    with:
+      artifact-name-unsigned-rpms: ${{ needs.config.outputs.rpm-unsigned }}
+      artifact-name-signed-rpms:   ${{ needs.config.outputs.rpm-signed }}
+      artifact-name-public-keys:   ${{ needs.config.outputs.keys-public }}
+
+  rpmvalidate:
+    needs: [config, rpmsign]
+    uses: OpenCHAMI/github-actions/.github/workflows/validate-rpm-quadlet.yml@773141a500334fad0508b093b792113ccac43610 # v3.5
+    with:
+      artifact-name-signed-rpms:   ${{ needs.config.outputs.rpm-signed }}
+      rpms: |
+        - name: openchami-postgres-quadlet-*.rpm
+          files:
+            - /etc/openchami
+            - /etc/openchami/pg-init
+            - /etc/openchami/pg-init/multi-psql-db.sh
+            - /usr/share/containers/systemd/postgres-data.volume
+            - /usr/share/containers/systemd/postgres.container
+            - /usr/share/containers/systemd/postgres.container.d
+            - /usr/share/containers/systemd/postgres.container.d/10-defaults.conf
+            - /usr/share/licenses/openchami-postgres-quadlet
+            - /usr/share/licenses/openchami-postgres-quadlet/MIT.txt

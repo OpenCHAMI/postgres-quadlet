@@ -1,0 +1,26 @@
+# SPDX-FileCopyrightText: (C) Copyright 2026 OpenCHAMI a Series of LF Projects, LLC
+# SPDX-License-Identifier: MIT
+
+[Unit]
+Description=The %N container
+PartOf=openchami.target
+Requires=openchami-internal-network.service openchami-jwt-internal-network.service postgres-data-volume.service
+After=openchami-internal-network.service openchami-jwt-internal-network.service postgres-data-volume.service
+
+[Container]
+ContainerName=%N
+HostName=%N
+
+# Most container settings are specified in
+#
+#   /usr/share/containers/systemd/postgres.container.d/10-defaults.conf
+#
+# which provides container specific settings. To override these see the
+# comments near the top of that file explaining how to create drop-in
+# override files for Postgres
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=openchami.target
