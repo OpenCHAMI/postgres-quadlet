@@ -1,0 +1,27 @@
+# SPDX-FileCopyrightText: 2026 OpenCHAMI Contributors
+# SPDX-License-Identifier: MIT
+
+[Unit]
+Description=The %N container
+PartOf=openchami.target
+Requires=openchami-internal-network.service openchami-jwt-internal-network.service postgres-data-volume.service
+After=openchami-internal-network.service openchami-jwt-internal-network.service postgres-data-volume.service
+
+[Container]
+ContainerName=%N
+HostName=%N
+# The container image is configured by default in the podman drop-in file
+#
+#    /usr/share/containers/systemd/postgres.container.d/10-defaults.conf
+#
+# and may be overridden in a user supplied drop-in file numbered higher
+# than '10-' in
+#
+#    /etc/containers/systemd/postgres.container.d
+#
+# for example:
+#
+#    /etc/containers/systemd/postgres.container.d/20-image-override.conf
+
+[Service]
+Restart=always
