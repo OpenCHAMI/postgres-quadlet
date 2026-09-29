@@ -28,18 +28,12 @@ as part of an OpenCHAMI deployment.
 %install
 install -d %{buildroot}/usr/share/containers/systemd
 install -d %{buildroot}/etc/openchami/pg-init
-cp scripts/multi-psql-db.sh %{buildroot}/etc/openchami/pg-init/multi-psql-db.sh
-
-grep -q '@IMAGE_TAG@' postgres.container
-sed "s|@IMAGE_TAG@|v%{version}|" postgres.container \
-    > %{buildroot}/usr/share/containers/systemd/postgres.container
-chmod 644 %{buildroot}/usr/share/containers/systemd/postgres.container
+install -m 644 multi-psql-db.sh %{buildroot}/etc/openchami/pg-init/
+install -m 644 postgres.container %{buildroot}/usr/share/containers/systemd/
 install -d %{buildroot}/usr/share/containers/systemd/postgres.container.d
 install -m 644 postgres.container.d/10-defaults.conf \
-    %{buildroot}/usr/share/containers/systemd/postgres.container.d/
-
-install -m 644 postgres-data.volume \
-    %{buildroot}/usr/share/containers/systemd/postgres-data.volume
+        %{buildroot}/usr/share/containers/systemd/postgres.container.d/
+install -m 644 postgres-data.volume %{buildroot}/usr/share/containers/systemd/
 
 %files
 %license LICENSES/MIT.txt
