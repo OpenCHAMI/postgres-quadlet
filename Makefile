@@ -7,7 +7,7 @@
 
 # Variables
 GIT      ?= $(shell command -v git 2>/dev/null)
-TAG      ?= $(shell $(GIT) describe --tags --always --dirty)
+TAG      ?= $(GIT) describe --tags --always --dirty
 VERSION  ?= $(shell $(TAG) 2>/dev/null || echo "dev")
 
 # RPM version/release: strip the leading 'v' and drop git-describe's

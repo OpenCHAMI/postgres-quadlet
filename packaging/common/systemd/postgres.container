@@ -10,18 +10,14 @@ After=openchami-internal-network.service openchami-jwt-internal-network.service 
 [Container]
 ContainerName=%N
 HostName=%N
-# The container image is configured by default in the podman drop-in file
+
+# Most container settings are specified in
 #
-#    /usr/share/containers/systemd/postgres.container.d/10-defaults.conf
+#   /usr/share/containers/systemd/postgres.container.d/10-defaults.conf
 #
-# and may be overridden in a user supplied drop-in file numbered higher
-# than '10-' in
-#
-#    /etc/containers/systemd/postgres.container.d
-#
-# for example:
-#
-#    /etc/containers/systemd/postgres.container.d/20-image-override.conf
+# container specific settings. To override these see the comments near
+# the top of that file explaining how to create drop-in override files
+# for Postgres
 
 [Service]
 Restart=always

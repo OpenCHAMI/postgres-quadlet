@@ -1,8 +1,5 @@
 # SPDX-FileCopyrightText: 2026 OpenCHAMI Contributors
 # SPDX-License-Identifier: MIT
-#
-# See `make rpm-build` and docs/RPM_PACKAGING.md for the tag-to-version
-# mapping and how the packaged quadlet's image tag is pinned to it.
 
 Name:           openchami-postgres-quadlet
 Version:        %{version}
