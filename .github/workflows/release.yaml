@@ -28,13 +28,13 @@ jobs:
           } >> "$GITHUB_OUTPUT"
   rpmbuild:
     needs: [config]
-    uses: OpenCHAMI/github-actions/.github/workflows/build-rpm-quadlet.yml@v3.5
+    uses: OpenCHAMI/github-actions/.github/workflows/build-rpm-quadlet.yml@773141a500334fad0508b093b792113ccac43610 # v3.5
     with:
       artifact-name-unsigned-rpms: ${{ needs.config.outputs.rpm-unsigned }}
 
   rpmsign:
     needs: [config, rpmbuild]
-    uses: OpenCHAMI/github-actions/.github/workflows/gpg-sign-artifacts.yml@v3.5
+    uses: OpenCHAMI/github-actions/.github/workflows/gpg-sign-artifacts.yml@773141a500334fad0508b093b792113ccac43610 # v3.5
     secrets: inherit
     with:
       artifact-name-unsigned-rpms: ${{ needs.config.outputs.rpm-unsigned }}
@@ -45,7 +45,7 @@ jobs:
     needs: [config, rpmsign]
     permissions:
       contents: write
-    uses: OpenCHAMI/github-actions/.github/workflows/release-signed-artifacts.yml@v3.5
+    uses: OpenCHAMI/github-actions/.github/workflows/release-signed-artifacts.yml@773141a500334fad0508b093b792113ccac43610 # v3.5
     with:
       artifact-name-signed-rpms: ${{ needs.config.outputs.rpm-signed }}
       artifact-name-public-keys: ${{ needs.config.outputs.keys-public }}
