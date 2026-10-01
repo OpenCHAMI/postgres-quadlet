@@ -42,14 +42,14 @@ first navigate to the root of the repo where the RPM was built and
 then issue the following command:
 
 ```bash
-sudo dnf -y dist/rpmbuild/RPMS/noarch/openchami-postgres-quadlet-*.rpm
+sudo dnf install -y dist/rpmbuild/RPMS/noarch/openchami-postgres-quadlet-*.rpm
 ```
 
 ## Running OpenCHAMI Postgres Quadlet on an OpenCHAMI Management Node
 
-Before starting Postgres on an OpenCHAMI management node some external
+Before starting Postgres on an OpenCHAMI management node, some external
 environment needs to be set up. Specifically, there are Podman secrets
-that are used to deploy Postgres and there are networks that need to
+that are used to deploy Postgres, and there are networks that need to
 be available to the OpenCHAMI quadlet services including
 Postgres. Finally, Postgres can be started, stopped, restarted and so
 forth using `systemctl`. An attempt is made upon installation of the
@@ -122,7 +122,7 @@ the default configuration these are:
 
 - `openchami-internal.network`
 
-The network used for general network traffic between component and
+The network used for general network traffic between components and
 proxied traffic arriving from managed nodes. On a single management
 host cluster, this is a virtual network within Podman provided by a
 separate package outside the scope of the Postgres wrapper.
@@ -130,7 +130,7 @@ separate package outside the scope of the Postgres wrapper.
 - `openchami-jwt-internal.network`
 
 A separate network used for securely isolated traffic relating to JWT
-verificatoin and cryptographic key distribution within the OpenCHAMI
+verification and cryptographic key distribution within the OpenCHAMI
 management plane. On a single management host cluster, this is a
 virtual network within Podman provided by a separate package outside
 the scope of the Postgres wrapper.
