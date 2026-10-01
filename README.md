@@ -78,7 +78,7 @@ configured with the following secrets:
   database, and the password of that user. At a minimum, this should
   contain:
 
-    hmsds:smd-user:<the value of smd_postgres_password above>
+    `hmsds:smd-user:<the value of smd_postgres_password above>`
 
   which describes the HSM Dataset used by SMD and its clients.
 
@@ -109,7 +109,7 @@ SMD_PASSWORD="$(\
     sudo podman secret inspect smd_postgres_password --showsecret | \
     jq -r '.[0].SecretData'\
 )" \
-echo -n "hsmds:smd-user:$SMD_PASSWORD" | \
+echo -n "hmsds:smd-user:$SMD_PASSWORD" | \
     sudo podman secret create smd_postgres_password - > /dev/null
 ```
 
