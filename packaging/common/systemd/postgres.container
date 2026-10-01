@@ -15,9 +15,9 @@ HostName=%N
 #
 #   /usr/share/containers/systemd/postgres.container.d/10-defaults.conf
 #
-# container specific settings. To override these see the comments near
-# the top of that file explaining how to create drop-in override files
-# for Postgres
+# which provides container specific settings. To override these see the
+# comments near the top of that file explaining how to create drop-in
+# override files for Postgres
 
 [Service]
 Restart=always
