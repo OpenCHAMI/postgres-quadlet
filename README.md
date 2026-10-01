@@ -110,7 +110,7 @@ SMD_PASSWORD="$(\
     jq -r '.[0].SecretData'\
 )" \
 echo -n "hmsds:smd-user:$SMD_PASSWORD" | \
-    sudo podman secret create smd_postgres_password - > /dev/null
+    sudo podman secret create postgres_multiple_databases - > /dev/null
 ```
 
 ### Required Networks for the OpenCHAMI Postgres Quadlet
