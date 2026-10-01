@@ -108,7 +108,7 @@ or
 SMD_PASSWORD="$(\
     sudo podman secret inspect smd_postgres_password --showsecret | \
     jq -r '.[0].SecretData'\
-)" \
+)" && \
 echo -n "hmsds:smd-user:$SMD_PASSWORD" | \
     sudo podman secret create postgres_multiple_databases - > /dev/null
 ```
