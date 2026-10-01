@@ -47,15 +47,12 @@ sudo dnf install -y dist/rpmbuild/RPMS/noarch/openchami-postgres-quadlet-*.rpm
 
 ## Running OpenCHAMI Postgres Quadlet on an OpenCHAMI Management Node
 
-Before starting Postgres on an OpenCHAMI management node, some external
-environment needs to be set up. Specifically, there are Podman secrets
-that are used to deploy Postgres, and there are networks that need to
-be available to the OpenCHAMI quadlet services including
-Postgres. Finally, Postgres can be started, stopped, restarted and so
-forth using `systemctl`. An attempt is made upon installation of the
-`openchami-postgres-quadlet` package to start Postgres. If this
-attempt is successful, Postgres will be up and running at the
-conclusion of installation.
+Before starting Postgres on an OpenCHAMI management node, some
+external environment needs to be set up. Specifically, there are
+Podman secrets that are used to deploy Postgres, and there are
+networks that need to be available to the OpenCHAMI quadlet services
+including Postgres. Once all of this is in place, Postgres can be
+started, stopped, restarted and so forth using `systemctl`.
 
 ### Setting up Secrets for OpenCHAMI Postgres Quadlet
 
