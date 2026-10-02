@@ -21,3 +21,6 @@ HostName=%N
 
 [Service]
 Restart=always
+
+[Install]
+WantedBy=openchami.target
