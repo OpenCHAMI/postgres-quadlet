@@ -46,6 +46,7 @@ install -m 644 postgres-data.volume %{buildroot}/usr/share/containers/systemd/
 # reload systemd so the new Quadlet-generated unit is seen
 systemctl daemon-reload || :
 if [ $1 -ge 2 ]; then
+    # If the service is running, restart it to pick up the update.
     systemctl try-restart postgres.service || :
 fi
 
