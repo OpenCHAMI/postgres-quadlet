@@ -11,7 +11,7 @@ HostName=%N
 # Unlike OpenCHAMI components, postgres comes from a non-openchami
 # managed registry and has its own versioning scheme, so the version
 # of this package cannot be used to select the image.
-Image=docker.io/library/postgres:11.5-alpine
+Image=docker.io/library/postgres:18-alpine
 
 [Service]
 Restart=always
