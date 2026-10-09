@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: © 2026 OpenCHAMI a Series of LF Projects, LLC
+
+SPDX-License-Identifier: MIT
+-->
 # postgres-quadlet
 
 Podman Quadlet packaging for the Postgres database of an OpenCHAMI

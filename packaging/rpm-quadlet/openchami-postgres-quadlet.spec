@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: (C) Copyright 2026 OpenCHAMI a Series of LF Projects, LLC
+# SPDX-FileCopyrightText: © 2026 OpenCHAMI a Series of LF Projects, LLC
 # SPDX-License-Identifier: MIT
 
 Name:           openchami-postgres-quadlet

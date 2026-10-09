@@ -4,7 +4,7 @@
 # https://github.com/mrts/docker-postgresql-multiple-databases/blob/master/create-multiple-postgresql-databases.sh
 #
 # SPDX-FileCopyrightText: 2017 Mart Sõmermaa
-# SPDX-FileCopyrightText: (C) Copyright 2026 OpenCHAMI a Series of LF Projects, LLC
+# SPDX-FileCopyrightText: © 2026 OpenCHAMI a Series of LF Projects, LLC
 #
 # SPDX-License-Identifier: MIT
 set -e
