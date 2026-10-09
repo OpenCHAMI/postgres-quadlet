@@ -4,20 +4,14 @@
 [Unit]
 Description=The %N container
 PartOf=openchami.target
-Requires=openchami-internal-network.service openchami-jwt-internal-network.service postgres-data-volume.service
-After=openchami-internal-network.service openchami-jwt-internal-network.service postgres-data-volume.service
 
 [Container]
 ContainerName=%N
 HostName=%N
-
-# Most container settings are specified in
-#
-#   /usr/share/containers/systemd/postgres.container.d/10-defaults.conf
-#
-# which provides container specific settings. To override these see the
-# comments near the top of that file explaining how to create drop-in
-# override files for Postgres
+# Unlike OpenCHAMI components, postgres comes from a non-openchami
+# managed registry and has its own versioning scheme, so the version
+# of this package cannot be used to select the image.
+Image=docker.io/library/postgres:11.5-alpine
 
 [Service]
 Restart=always

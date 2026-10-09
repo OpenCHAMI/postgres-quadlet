@@ -20,4 +20,4 @@ jobs:
       contents: read
       security-events: write
       id-token: write
-    uses: OpenCHAMI/github-actions/.github/workflows/scorecard.yml@773141a500334fad0508b093b792113ccac43610 # v3.5
+    uses: OpenCHAMI/github-actions/.github/workflows/scorecard.yml@8143942058adef1ce81a96a11ae9074358df4fbd # v3.11

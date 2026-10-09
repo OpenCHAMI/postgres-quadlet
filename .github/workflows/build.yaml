@@ -29,18 +29,18 @@ jobs:
           {
             echo "rpm-unsigned=rpms-unsigned"
             echo "rpm-signed=rpms-signed"
-            echo "keys-public=public-keys"
+            echo "keys-public=gpg-public-keys"
           } >> "$GITHUB_OUTPUT"
 
   rpmbuild:
     needs: [config]
-    uses: OpenCHAMI/github-actions/.github/workflows/build-rpm-quadlet.yml@773141a500334fad0508b093b792113ccac43610 # v3.5
+    uses: OpenCHAMI/github-actions/.github/workflows/build-rpm-quadlet.yml@8143942058adef1ce81a96a11ae9074358df4fbd # v3.11
     with:
       artifact-name-unsigned-rpms: ${{ needs.config.outputs.rpm-unsigned }}
 
   rpmsign:
     needs: [config, rpmbuild]
-    uses: OpenCHAMI/github-actions/.github/workflows/gpg-sign-artifacts.yml@773141a500334fad0508b093b792113ccac43610 # v3.5
+    uses: OpenCHAMI/github-actions/.github/workflows/gpg-sign-artifacts.yml@8143942058adef1ce81a96a11ae9074358df4fbd # v3.11
     secrets: inherit
     with:
       artifact-name-unsigned-rpms: ${{ needs.config.outputs.rpm-unsigned }}
@@ -49,7 +49,7 @@ jobs:
 
   rpmvalidate:
     needs: [config, rpmsign]
-    uses: OpenCHAMI/github-actions/.github/workflows/validate-rpm-quadlet.yml@773141a500334fad0508b093b792113ccac43610 # v3.5
+    uses: OpenCHAMI/github-actions/.github/workflows/validate-rpm-quadlet.yml@8143942058adef1ce81a96a11ae9074358df4fbd # v3.11
     with:
       artifact-name-signed-rpms:   ${{ needs.config.outputs.rpm-signed }}
       rpms: |
