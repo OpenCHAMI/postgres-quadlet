@@ -19,6 +19,8 @@ function create_user_and_database() {
 	    CREATE USER "$username" WITH PASSWORD '$password';
 	    CREATE DATABASE "$database";
 	    GRANT ALL PRIVILEGES ON DATABASE "$database" TO "$username";
+            \connect "$database"
+            GRANT ALL ON SCHEMA public TO "$username";
 EOSQL
 }
 
