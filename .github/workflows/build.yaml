@@ -58,6 +58,7 @@ jobs:
             - /etc/openchami
             - /etc/openchami/pg-init
             - /etc/openchami/pg-init/multi-psql-db.sh
+            - /usr/libexec/openchami/check-postgres-version.sh
             - /usr/share/containers/systemd/postgres-data.volume
             - /usr/share/containers/systemd/postgres.container
             - /usr/share/containers/systemd/postgres.container.d
