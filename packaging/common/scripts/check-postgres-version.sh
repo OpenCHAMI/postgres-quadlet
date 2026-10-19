@@ -38,15 +38,21 @@ function usage() {
 }
 
 function err() {
-    echo "ERROR:"
+    local dash_n=""
+    if [ "$#" -lt 2 ]; then
+        dash_n="-n"
+    fi
+    echo ${dash_n} "ERROR:"
     for m in "${@}"; do
         echo "${m}" >&2
     done
     exit 2
 }
 
-readonly VOLUME="${1}"; shift || usage "missing volume-name"
-readonly IMAGE="${1}"; shift || usage "missing image-reference string"
+(( "${#}" > 1 )) || usage "too few arguments"
+(( "${#}" < 3 )) || usage "too many arguments"
+readonly VOLUME="${1}"
+readonly IMAGE="${2}"
 
 # Pull the major version out of the image's tag (text after the last ':'),
 # stopping at the first non-digit character. Covers "18", "18.6",
@@ -65,7 +71,14 @@ fi
 # Mount (or find the existing mountpoint of) the named Podman volume so its
 # contents can be inspected directly from the host. Must run as the same
 # user that owns postgres.service (root, for this package's system quadlet).
-mountpoint="$(podman volume mount "${VOLUME}" || true)"
+#
+# First off, if the volume doesn't exist, then it will be created
+# later, and there is no reason to check it.
+podman volume exists "${VOLUME}" || exit 0
+
+if ! mountpoint="$(podman volume mount "${VOLUME}")"; then
+    err "failed to mount '${VOLUME}' for version check, please check volume health"
+fi
 
 if [ -n "${mountpoint}" ]; then
     # Look for a PG_VERSION file in any location a prior Postgres version may
