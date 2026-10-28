@@ -11,7 +11,23 @@ HostName=%N
 # Unlike OpenCHAMI components, postgres comes from a non-openchami
 # managed registry and has its own versioning scheme, so the version
 # of this package cannot be used to select the image.
-Image=docker.io/library/postgres:11.5-alpine
+#
+# NOTE: when upgrading the container, the second argument to the
+#       ExecStartPre command below must be updated to match the setting
+#       here.
+Image=docker.io/library/postgres:18-alpine
 
 [Service]
+# -------------------------------------------------------------------------
+# Startup safety: version check
+# -------------------------------------------------------------------------
+#
+# Refuse to start if the Postgres major version of the volume data
+# already on disk does not match the major version of 'postgres'
+# represented in the 'Image' specification above. On version bumps,
+# keep the second argument to the 'ExecStartPre' script here identical
+# to the 'Image' specification to ensure checking against the correct
+# 'postgres' version.
+ExecStartPre=/usr/libexec/openchami/check-postgres-version.sh systemd-postgres-data docker.io/library/postgres:18-alpine
+
 Restart=always

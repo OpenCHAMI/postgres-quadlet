@@ -31,12 +31,16 @@ install -d %{buildroot}/usr/share/containers/systemd/postgres.container.d
 install -m 644 postgres.container.d/10-defaults.conf \
         %{buildroot}/usr/share/containers/systemd/postgres.container.d/
 install -m 644 postgres-data.volume %{buildroot}/usr/share/containers/systemd/
+install -d %{buildroot}/usr/libexec/openchami
+install -m 755 check-postgres-version.sh %{buildroot}/usr/libexec/openchami/
 
 %files
 %license LICENSES/MIT.txt
 %dir /etc/openchami
 %dir /etc/openchami/pg-init
 %dir /usr/share/containers/systemd/postgres.container.d
+%dir /usr/libexec/openchami
+/usr/libexec/openchami/check-postgres-version.sh
 /usr/share/containers/systemd/postgres.container
 /usr/share/containers/systemd/postgres.container.d/10-defaults.conf
 /usr/share/containers/systemd/postgres-data.volume
