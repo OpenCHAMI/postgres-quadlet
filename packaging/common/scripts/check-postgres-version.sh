@@ -52,7 +52,12 @@ function err() {
 (( "${#}" > 1 )) || usage "too few arguments"
 (( "${#}" < 3 )) || usage "too many arguments"
 readonly VOLUME="${1}"
-readonly IMAGE="${2}"
+readonly UNIT_FILE="${2}"
+IMAGE="$(sed -n 's/^Image=//p' "${UNIT_FILE}" | tail -n 1)"
+readonly IMAGE
+if [ -z "${IMAGE}" ]; then
+    err "could not find an Image= line in '${UNIT_FILE}'"
+fi
 
 # Pull the major version out of the image's tag (text after the last ':'),
 # stopping at the first non-digit character. Covers "18", "18.6",
