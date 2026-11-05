@@ -33,7 +33,7 @@ function usage() {
     for m in "${@}"; do
         echo "${m}" >&2
     done
-    echo "usage: ${0} <volume-name> <image-reference>" >&2
+    echo "usage: ${0} <volume-name> <image-path>" >&2
     exit 2
 }
 
@@ -129,6 +129,9 @@ for candidate in "${candidates[@]}"; do
             "   volume by re-running OpenCHAMI discovery." \
             "4. Re-install the new version of 'openchami-postgres-quadlet'" \
             "5. Restart the postgres service"
+    fi
+    if [ "${on_disk}" -lt "${expected}" ]; then
+        err "NOTE: the Postgres version is downgraded, you will need to downgrade the data"
     fi
 done
 
