@@ -28,6 +28,6 @@ Image=docker.io/library/postgres:18-alpine
 # keep the second argument to the 'ExecStartPre' script here identical
 # to the 'Image' specification to ensure checking against the correct
 # 'postgres' version.
-ExecStartPre=/usr/libexec/openchami/check-postgres-version.sh systemd-postgres-data docker.io/library/postgres:18-alpine
+ExecStartPre=/usr/libexec/openchami/check-postgres-version.sh systemd-postgres-data %y
 
 Restart=always
