@@ -130,8 +130,14 @@ for candidate in "${candidates[@]}"; do
             "4. Re-install the new version of 'openchami-postgres-quadlet'" \
             "5. Restart the postgres service"
     fi
-    if [ "${on_disk}" -lt "${expected}" ]; then
-        err "NOTE: the Postgres version is downgraded, you will need to downgrade the data"
+    if [ "${on_disk}" -gt "${expected}" ]; then
+        err \
+            "PostgreSQL data in volume '${VOLUME}' was created by major" \
+            "version '${on_disk}', but '${IMAGE}' is the older major" \
+            "version '${expected}'. Data from a newer major version cannot" \
+            "be read by an older one, so the image cannot be rolled back." \
+            "Set 'Image=' back to a version ${on_disk} image (remove any" \
+            "drop-in override) and restart the postgres service."
     fi
 done
 
