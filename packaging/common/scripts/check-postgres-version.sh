@@ -104,7 +104,7 @@ for candidate in "${candidates[@]}"; do
     [ -s "${candidate}" ] || continue
     found=1
     on_disk="$(cat "${candidate}")"
-    if [ "${on_disk}" != "${expected}" ]; then
+    if [ "${on_disk}" -lt "${expected}" ]; then
         err \
             "PostgreSQL data in volume '${VOLUME}' was created by major" \
             "version '${on_disk}' (found in '${candidate}'), but '${IMAGE}'" \
